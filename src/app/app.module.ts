@@ -3,16 +3,37 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './page/home/home.component';
+
+import { environment } from 'src/environments/environment';
+import { initializeApp, provideFirebaseApp  } from '@angular/fire/app';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { PagesModule } from './pages/pages.module';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
+
+
+var config = {
+  apiKey: environment.firebase.apiKey,
+  authDomain: environment.firebase.authDomain,
+  projectId: environment.firebase.projectId,
+  storageBucket: environment.firebase.storageBucket,
+  messagingSenderId: environment.firebase.messagingSenderId,
+}
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent
-  ],
+    AppComponent
+    ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    PagesModule,
+    RouterLink,
+    RouterLinkActive,
+
+
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth())
   ],
   providers: [],
   bootstrap: [AppComponent]
